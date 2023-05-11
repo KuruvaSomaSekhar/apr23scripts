@@ -1,0 +1,8 @@
+---
+- name: ping module playbook
+  hosts: apps
+  become: true
+  tasks:
+    - name: ping module task  
+      ping:
+        

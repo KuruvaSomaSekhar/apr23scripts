@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: display multiple file contents
+      ansible.builtin.debug: var=item
+      with_file:
+        - "/etc/sudoers"
+    - lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%wheel ALL='
+        line: '{{item}} ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+      with_items:
+        - abc
+        - pqr

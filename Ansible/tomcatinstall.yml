@@ -1,0 +1,12 @@
+---
+- name: tomcat install playbook
+  become: yes
+  hosts: apps
+  tasks:
+    - name: copy tomcat script
+      copy:
+        src: tomcat.sh
+        dest: /tmp/tomcat.sh
+        mode: '777'
+    - name: execute script
+      shell: bash /tmp/tomcat.sh

@@ -1,0 +1,27 @@
+---
+- name: Installation playbook
+  become: true
+  hosts: apps
+  tasks: 
+    - name: git install
+      yum:
+        name: git
+        state: latest
+    - name: Java install
+      yum:
+        name:  java-1.8.0-openjdk-devel
+        state: present
+    - name: remove java 17
+      yum: 
+        name: 
+          - java-17-amazon-corretto-devel
+          - java-17-amazon-corretto-headless
+        state: absent
+    - name: maven 
+      yum: 
+        name: maven
+        state: absent
+    - name: maven 
+      yum: 
+        name: maven
+        state: present

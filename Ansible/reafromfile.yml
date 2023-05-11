@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  become: true
+  vars_files:
+    - "./users.yml"
+  tasks:
+    - name: display multiple file contents
+      ansible.builtin.debug: var=item
+      with_file:
+        - "/etc/sudoers"
+    - lineinfile:
+        #include_vars: "./users.yml"
+        path: /etc/sudoers
+        state: present
+        regexp: '^%wheel ALL='
+        line: '{{ item }} ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+      with_items: '{{ users }}'
